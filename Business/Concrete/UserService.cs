@@ -17,20 +17,28 @@ namespace Business.Concrete
         private readonly IUserDal _userDal;
         private readonly IHashHelper _hashHelper;
         private readonly IJwtHelper _jwtHelper;
+        private readonly IRoleHelper _roleHelper;
 
-        public UserService(IUserDal userDal,IJwtHelper jwtHelper ,IHashHelper hashHelper)
+        public UserService(IUserDal userDal,IJwtHelper jwtHelper ,IHashHelper hashHelper, IRoleHelper roleHelper)
         {
             _userDal = userDal;
             _hashHelper = hashHelper;
             _jwtHelper = jwtHelper;
+            _roleHelper = roleHelper;
         }
 
         [ValidationAspect(typeof(UserRegisterValidator))]
         public async Task<IResult> RegisterAsync(UserForRegisterDto userDto)
         {
+            var isUserExist = await _userDal.AnyAsync(x => x.Email == userDto.Email);
+
+            if (isUserExist)
+                return new ErrorResult(Messages.UserAlreadyExists);
+
             string passwordHash = _hashHelper.Encrypt(userDto.Password);
 
-            _ = Enum.TryParse(userDto.Role.ToLower(), out UserRoleEnum role);
+            var userRole = _roleHelper.GetRole(userDto.Role);
+
             var user = new User
             {
                 Email = userDto.Email,
@@ -39,15 +47,11 @@ namespace Business.Concrete
                 LastName = userDto.LastName,
                 PasswordHash = passwordHash,
                 FailedTryCount = 0,
-                UserRoleId = (long)role,
+                UserRoleId = (long)userRole,
                 IsDeleted = false,
                 CreatedOn = DateTime.Now,
                 UpdatedOn = DateTime.Now,
             };
-            var isUserExist = await _userDal.AnyAsync(x => x.Email == userDto.Email);
-            
-            if (isUserExist)
-                return new ErrorResult(Messages.UserAlreadyExists);
 
             var result = await _userDal.AddAsync(user);
 

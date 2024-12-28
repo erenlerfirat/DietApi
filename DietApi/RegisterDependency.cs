@@ -81,6 +81,7 @@ namespace DietApi
 
             services.AddSingleton<IJwtHelper, JwtHelper>();
             services.AddSingleton<IHashHelper, HashHelper>();
+            services.AddSingleton<IRoleHelper, RoleHelper>();
 
 
             #endregion
