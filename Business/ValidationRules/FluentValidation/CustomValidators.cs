@@ -1,20 +1,18 @@
 ﻿using Entity.Domain;
+using Entity.Dtos;
 using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class UserValidator : AbstractValidator<User>
+    public class UserRegisterValidator : AbstractValidator<UserForRegisterDto>
     {
-        public UserValidator()
+        public UserRegisterValidator()
         {
-            RuleFor(t => t.Id).NotEmpty().NotNull();
             RuleFor(t => t.FirstName).NotEmpty().NotNull();
             RuleFor(t => t.LastName).NotEmpty().NotNull();
             RuleFor(t => t.Email).NotEmpty().NotNull();
             RuleFor(t => t.Phone).NotEmpty().NotNull();
-            RuleFor(t => t.PasswordHash).NotEmpty().NotNull();
-            
-        }
-        
+            RuleFor(t => t.Password).NotEmpty().NotNull();            
+        }        
     }
 }

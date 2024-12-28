@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Core.Abstract;
+using Core.Aspects.Autofac.Validation;
 using Core.Attributes.JWT;
 using Core.Constants;
 using Core.Utilities.Results;
@@ -22,6 +24,7 @@ namespace Business.Concrete
                 _clientDal = clientDal;
                 _jwtHelper = jwtHelper;
         }
+
         
         public async Task<IResult> AddAsync(ClientAddRequest request)
         {

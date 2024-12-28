@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
 using Core.Abstract;
+using Core.Aspects.Autofac.Validation;
 using Core.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -23,6 +25,7 @@ namespace Business.Concrete
             _jwtHelper = jwtHelper;
         }
 
+        [ValidationAspect(typeof(UserRegisterValidator))]
         public async Task<IResult> RegisterAsync(UserForRegisterDto userDto)
         {
             string passwordHash = _hashHelper.Encrypt(userDto.Password);
