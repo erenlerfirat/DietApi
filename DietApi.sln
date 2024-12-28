@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DietApi", "TodoAPI\DietApi.csproj", "{B7ECF066-1F8A-43A0-82AC-8959412A9321}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{3110FBF7-ED4E-46D2-BE04-B30F9D2610AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{2EBA5220-9207-4A65-A51C-D95DD86BEAF0}"
@@ -25,16 +23,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{F30BA9
 		InitialTablesCreate_20241220.sql = InitialTablesCreate_20241220.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DietApi", "DietApi\DietApi.csproj", "{3DCF2C01-37F5-4C2B-8ACB-7296F4A5E1AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7ECF066-1F8A-43A0-82AC-8959412A9321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7ECF066-1F8A-43A0-82AC-8959412A9321}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7ECF066-1F8A-43A0-82AC-8959412A9321}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7ECF066-1F8A-43A0-82AC-8959412A9321}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3110FBF7-ED4E-46D2-BE04-B30F9D2610AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3110FBF7-ED4E-46D2-BE04-B30F9D2610AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3110FBF7-ED4E-46D2-BE04-B30F9D2610AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,6 +51,10 @@ Global
 		{DB14AEE0-C66A-4A03-91BB-405CD610B188}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB14AEE0-C66A-4A03-91BB-405CD610B188}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB14AEE0-C66A-4A03-91BB-405CD610B188}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DCF2C01-37F5-4C2B-8ACB-7296F4A5E1AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DCF2C01-37F5-4C2B-8ACB-7296F4A5E1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DCF2C01-37F5-4C2B-8ACB-7296F4A5E1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DCF2C01-37F5-4C2B-8ACB-7296F4A5E1AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

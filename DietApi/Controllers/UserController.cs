@@ -38,7 +38,7 @@ namespace DietApi.Controllers
             return BadRequest(result);
         }
 
-        [HttpPut("Register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(UserForRegisterDto userDto)
         {            
             var result = await userService.RegisterAsync(userDto);
@@ -50,7 +50,7 @@ namespace DietApi.Controllers
             return NotFound();
         }
 
-        [HttpPost("Update")]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update(User user)
         {
             var result = await userService.UpdateAsync(user);

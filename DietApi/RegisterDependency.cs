@@ -23,7 +23,7 @@ namespace DietApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReservoireAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DietApi", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
