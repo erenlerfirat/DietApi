@@ -40,7 +40,7 @@ namespace Business.Concrete
 
                 string passwordHash = _hashHelper.Encrypt(userDto.Password);
 
-                var userRole = _roleHelper. GetRole(userDto.Role);
+                var userRole = _roleHelper.GetRole(userDto.Role);
 
                 var user = new User
                 {

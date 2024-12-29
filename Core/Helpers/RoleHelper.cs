@@ -12,8 +12,10 @@ namespace Core.Helpers
             role ??= string.Empty;
             bool result =  Enum.TryParse(role.ToLower(), out UserRoleEnum userRole);
 
-            return result ? userRole
-                          : throw new ValidationException(Messages.RoleTypeError);
+            if (result || UserRoleEnum.admin == userRole)             
+                throw new ValidationException(Messages.RoleTypeError);
+            
+            return userRole;
         }
     }
 }
