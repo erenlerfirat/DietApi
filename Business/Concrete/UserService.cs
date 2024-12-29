@@ -3,6 +3,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Abstract;
 using Core.Aspects.Autofac.Validation;
 using Core.Constants;
+using Core.Utilities.CustomException;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entity.Domain;
@@ -30,35 +31,46 @@ namespace Business.Concrete
         [ValidationAspect(typeof(UserRegisterValidator))]
         public async Task<IResult> RegisterAsync(UserForRegisterDto userDto)
         {
-            var isUserExist = await _userDal.AnyAsync(x => x.Email == userDto.Email);
-
-            if (isUserExist)
-                return new ErrorResult(Messages.UserAlreadyExists);
-
-            string passwordHash = _hashHelper.Encrypt(userDto.Password);
-
-            var userRole = _roleHelper.GetRole(userDto.Role);
-
-            var user = new User
+            try
             {
-                Email = userDto.Email,
-                Phone = userDto.Phone,
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                PasswordHash = passwordHash,
-                FailedTryCount = 0,
-                UserRoleId = (long)userRole,
-                IsDeleted = false,
-                CreatedOn = DateTime.Now,
-                UpdatedOn = DateTime.Now,
-            };
+                var isUserExist = await _userDal.AnyAsync(x => x.Email == userDto.Email);
 
-            var result = await _userDal.AddAsync(user);
+                if (isUserExist)
+                    return new ErrorResult(Messages.UserAlreadyExists);
 
-            if(result is not null)
-             return new SuccessResult(Messages.Success);
+                string passwordHash = _hashHelper.Encrypt(userDto.Password);
 
-            return new ErrorResult(Messages.Error);
+                var userRole = _roleHelper. GetRole(userDto.Role);
+
+                var user = new User
+                {
+                    Email = userDto.Email,
+                    Phone = userDto.Phone,
+                    FirstName = userDto.FirstName,
+                    LastName = userDto.LastName,
+                    PasswordHash = passwordHash,
+                    FailedTryCount = 0,
+                    UserRoleId = (long)userRole,
+                    IsDeleted = false,
+                    CreatedOn = DateTime.Now,
+                    UpdatedOn = DateTime.Now,
+                };
+
+                var result = await _userDal.AddAsync(user);
+
+                if (result is not null)
+                    return new SuccessResult(Messages.Success);
+
+                return new ErrorResult(Messages.Error);
+            }
+            catch (ValidationException ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return new ErrorResult(ex.Message);
+            }
         }
 
         public async Task<IDataResult<AuthenticateResponse>> Authenticate(AuthenticateRequest request)

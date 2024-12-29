@@ -15,5 +15,10 @@
         public static string UserRegistered = "Kullanıcı başarıyla kaydedildi";
         public static string AccessTokenCreated = "Access token başarıyla oluşturuldu";
         #endregion
+
+        #region User Register
+        public static string RoleTypeError = "This user role is invalid";
+        #endregion
+
     }
 }

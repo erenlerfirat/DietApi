@@ -1,5 +1,6 @@
 ﻿using Core.Abstract;
 using Core.Constants;
+using Core.Utilities.CustomException;
 using System;
 
 namespace Core.Helpers
@@ -8,8 +9,11 @@ namespace Core.Helpers
     {
         public UserRoleEnum GetRole(string role)
         {
-            _ = Enum.TryParse(role.ToLower(), out UserRoleEnum userRole);
-            return userRole;
+            role ??= string.Empty;
+            bool result =  Enum.TryParse(role.ToLower(), out UserRoleEnum userRole);
+
+            return result ? userRole
+                          : throw new ValidationException(Messages.RoleTypeError);
         }
     }
 }

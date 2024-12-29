@@ -2,7 +2,7 @@
 {
     public enum UserRoleEnum
     {
-        admin, 
+        admin = -3047, 
         dietitian,
         client 
     }
