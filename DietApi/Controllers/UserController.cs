@@ -50,6 +50,31 @@ namespace DietApi.Controllers
             return NotFound();
         }
 
+        [HttpPut("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(UserForRegisterDto userDto)
+        {
+            var result = await userService.ChangePassWord(new User());
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return NotFound();
+        }
+
+        [HttpPut("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(UserForRegisterDto userDto)
+        {
+            var result = await userService.ForgotPassword(new User());
+
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return NotFound();
+        }
+
+
         [HttpPut("Update")]
         public async Task<IActionResult> Update(User user)
         {

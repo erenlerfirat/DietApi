@@ -104,5 +104,15 @@ namespace Business.Concrete
             var result = await _userDal.UpdateAsync(user);
             return new SuccessDataResult<User>(result);
         }
+
+        public Task<IResult> ChangePassWord(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IResult> ForgotPassword(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

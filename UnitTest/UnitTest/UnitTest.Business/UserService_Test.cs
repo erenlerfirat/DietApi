@@ -13,7 +13,7 @@ namespace UnitTest.UnitTest.Business
     {
 
         [Fact]
-        public async Task Register_Fail_When_UserExist_Return_False()
+        public async Task Register_Fail_When_UserExist_ExpectedFalse()
         {
             var userDal = new Mock<IUserDal>();
 
