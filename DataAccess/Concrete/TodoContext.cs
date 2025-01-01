@@ -40,6 +40,7 @@ namespace DataAccess.Concrete
         }
         
         public DbSet<User> User { get; set; }
+        public DbSet<UserPasswordReset> UserPasswordReset { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<ClientDiet> ClientDiet { get; set; }
         public DbSet<Diet> Diet { get; set; }

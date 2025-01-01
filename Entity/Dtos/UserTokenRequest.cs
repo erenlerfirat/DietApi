@@ -1,6 +1,8 @@
-﻿namespace Entity.Dtos
+﻿using Entity.Abstract;
+
+namespace Entity.Dtos
 {
-    public class UserTokenRequest
+    public class UserTokenRequest : IDto
     {
         public long UserId { get; set; }
         public string FirstName { get; set; }

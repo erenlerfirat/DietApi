@@ -3,9 +3,12 @@ using Business.ValidationRules.FluentValidation;
 using Core.Abstract;
 using Core.Aspects.Autofac.Validation;
 using Core.Constants;
+using Core.Extensions;
+using Core.Helpers;
 using Core.Utilities.CustomException;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.Dal;
 using Entity.Domain;
 using Entity.Dtos;
 using System;
@@ -19,13 +22,20 @@ namespace Business.Concrete
         private readonly IHashHelper _hashHelper;
         private readonly IJwtHelper _jwtHelper;
         private readonly IRoleHelper _roleHelper;
+        private readonly IUserPasswordResetDal _resetDal;
 
-        public UserService(IUserDal userDal,IJwtHelper jwtHelper ,IHashHelper hashHelper, IRoleHelper roleHelper)
+        public UserService(
+            IUserDal userDal,
+            IJwtHelper jwtHelper ,
+            IHashHelper hashHelper, 
+            IRoleHelper roleHelper,
+            IUserPasswordResetDal resetDal)
         {
             _userDal = userDal;
             _hashHelper = hashHelper;
             _jwtHelper = jwtHelper;
             _roleHelper = roleHelper;
+            _resetDal = resetDal;
         }
 
         [ValidationAspect(typeof(UserRegisterValidator))]
@@ -117,14 +127,63 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(result);
         }
 
-        public Task<IResult> ChangePassWord(User user)
+        public async Task<IResult> ChangePassword(UserPasswordChangeRequest request)
         {
-            throw new NotImplementedException();
+            var isUserExist = await _userDal.AnyAsync(x => x.Email == request.Email);
+            if (!isUserExist)
+                return new ErrorResult(Messages.UserNotFound);
+
+            var user = await _userDal.FirstOrDefaultAsync(x => x.Email == request.Email);
+
+            if (user.PasswordHash == _hashHelper.Encrypt(request.OldPassword))
+            {
+                user.UpdatedOn = DateTime.Now;
+                user.PasswordHash = _hashHelper.Encrypt(request.NewPassword);
+                await _userDal.UpdateAsync(user);
+                return new SuccessResult(Messages.Success);
+            }
+            return new ErrorResult(Messages.PasswordError); ;
         }
 
-        public Task<IResult> ForgotPassword(User user)
+        public async Task<IResult> ForgotPassword(UserPasswordResetRequest request)
         {
-            throw new NotImplementedException();
+            var isUserExist = await _userDal.AnyAsync(x => x.Email == request.Email);
+            if (!isUserExist)
+                return new ErrorResult(Messages.UserNotFound);
+
+            if (request.ResetKey.IsNullOrEmpty())
+            {
+                var x = await _resetDal.AddAsync(new UserPasswordReset() { 
+                    ResetKey = Guid.NewGuid().ToString() ,
+                    Email = request.Email,
+                    IsDeleted = false,
+                    Expire = DayHelper.StartOfDay(DateTime.Now).AddDays(3)
+                });
+                // emailSender.Send();
+                return new SuccessResult(Messages.UserResetPasswordLinkSent);
+            }
+
+            var resetInfo = await _resetDal.FirstOrDefaultAsync(x => 
+            !x.IsDeleted &&
+             x.ResetKey == request.ResetKey &&
+             x.Email == request.Email &&
+             x.Expire >= DayHelper.EndOfDay(DateTime.Now)
+            );
+
+            if (resetInfo != null) 
+            {
+                resetInfo.IsDeleted = true;
+                await _resetDal.UpdateAsync(resetInfo);
+
+                string passwordHash = _hashHelper.Encrypt(request.NewPassword);
+                var user = await _userDal.FirstOrDefaultAsync(x => x.Email == resetInfo.Email);
+                user.UpdatedOn = DateTime.Now;
+                user.PasswordHash = passwordHash;                
+                await _userDal.UpdateAsync(user);
+
+                return new SuccessResult(Messages.Success);
+            }
+            return new ErrorResult(Messages.Error);
         }
     }
 }

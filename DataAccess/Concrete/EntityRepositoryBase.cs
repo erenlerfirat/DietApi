@@ -16,6 +16,7 @@ namespace DataAccess.Concrete
     {
         private readonly TContext _context;
         private readonly IQueryable _queryable;
+        private readonly object x;
 
         public EntityRepositoryBase(TContext context)
         {

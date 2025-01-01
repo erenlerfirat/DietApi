@@ -17,6 +17,13 @@ CREATE TABLE [app].[User] (
 	IsDeleted Bit NOT NULL
 );
 
+CREATE TABLE [app].[UserPasswordReset] (
+	Email BigInt NOT NULL,
+	ResetKey varchar(250),
+	Expire DateTime,
+	IsDeleted Bit NOT NULL
+);
+
 CREATE TABLE [app].[UserRole] (
     Id BigInt NOT NULL PRIMARY KEY IDENTITY(1,1),
     RoleType varchar(20) NOT NULL ,

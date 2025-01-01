@@ -1,8 +1,9 @@
-﻿using Entity.Domain;
+﻿using Entity.Abstract;
+using Entity.Domain;
 
 namespace Entity.Dtos
 {
-    public class AuthenticateResponse
+    public class AuthenticateResponse : IDto
     {
         public string Token { get; set; }
 

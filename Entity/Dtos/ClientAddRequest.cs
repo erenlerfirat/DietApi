@@ -1,6 +1,8 @@
-﻿namespace Entity.Dtos
+﻿using Entity.Abstract;
+
+namespace Entity.Dtos
 {
-    public class ClientAddRequest
+    public class ClientAddRequest : IDto
     {
         public long UserId { get; set; }
         public string Gender { get; set; }

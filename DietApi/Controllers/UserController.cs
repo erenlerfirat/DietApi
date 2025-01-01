@@ -51,9 +51,9 @@ namespace DietApi.Controllers
         }
 
         [HttpPut("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(UserForRegisterDto userDto)
+        public async Task<IActionResult> ChangePassword(UserPasswordChangeRequest request)
         {
-            var result = await userService.ChangePassWord(new User());
+            var result = await userService.ChangePassWord(request);
 
             if (result.Success)
             {
@@ -63,9 +63,9 @@ namespace DietApi.Controllers
         }
 
         [HttpPut("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword(UserForRegisterDto userDto)
+        public async Task<IActionResult> ForgotPassword(UserPasswordResetRequest request)
         {
-            var result = await userService.ForgotPassword(new User());
+            var result = await userService.ForgotPassword(request);
 
             if (result.Success)
             {
