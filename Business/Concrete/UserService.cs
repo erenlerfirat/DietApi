@@ -135,7 +135,7 @@ namespace Business.Concrete
 
             var user = await _userDal.FirstOrDefaultAsync(x => x.Email == request.Email);
 
-            if (user.PasswordHash == _hashHelper.Encrypt(request.OldPassword))
+            if (_hashHelper.Validate(request.OldPassword, user.PasswordHash))
             {
                 user.UpdatedOn = DateTime.Now;
                 user.PasswordHash = _hashHelper.Encrypt(request.NewPassword);
