@@ -8,7 +8,7 @@ CREATE TABLE [app].[User] (
 	UserRoleId BigInt NOT NULL,
 	FirstName varchar(100) NOT NULL,
     LastName varchar(100) NOT NULL,
-	Email varchar(100),
+	Email nvarchar (100),
 	PasswordHash varchar(250),
 	Phone varchar(50),
 	FailedTryCount SmallInt,
@@ -16,6 +16,9 @@ CREATE TABLE [app].[User] (
 	UpdatedOn DateTime,
 	IsDeleted Bit NOT NULL
 );
+
+CREATE UNIQUE INDEX UQ_User_Email
+ON [app].[User] (Email);
 
 CREATE TABLE [app].[UserPasswordReset] (
 	Email BigInt NOT NULL,
