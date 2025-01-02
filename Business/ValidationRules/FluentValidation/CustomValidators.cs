@@ -1,5 +1,4 @@
-﻿using Entity.Domain;
-using Entity.Dtos;
+﻿using Entity.Dtos;
 using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
@@ -12,7 +11,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(t => t.LastName).NotEmpty().NotNull();
             RuleFor(t => t.Email).NotEmpty().NotNull();
             RuleFor(t => t.Phone).NotEmpty().NotNull();
-            RuleFor(t => t.Password).NotEmpty().NotNull();            
+            RuleFor(t => t.Password).NotEmpty().NotNull();
         }        
     }
 }

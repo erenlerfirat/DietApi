@@ -21,6 +21,7 @@ CREATE UNIQUE INDEX UQ_User_Email
 ON [app].[User] (Email);
 
 CREATE TABLE [app].[UserPasswordReset] (
+	Id BigInt NOT NULL PRIMARY KEY IDENTITY(1,1),
 	Email BigInt NOT NULL,
 	ResetKey varchar(250),
 	Expire DateTime,

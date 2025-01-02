@@ -8,7 +8,6 @@ using Core.Helpers;
 using Core.Utilities.CustomException;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
-using DataAccess.Concrete.Dal;
 using Entity.Domain;
 using Entity.Dtos;
 using System;
@@ -178,7 +177,7 @@ namespace Business.Concrete
                 string passwordHash = _hashHelper.Encrypt(request.NewPassword);
                 var user = await _userDal.FirstOrDefaultAsync(x => x.Email == resetInfo.Email);
                 user.UpdatedOn = DateTime.Now;
-                user.PasswordHash = passwordHash;                
+                user.PasswordHash = passwordHash;
                 await _userDal.UpdateAsync(user);
 
                 return new SuccessResult(Messages.Success);

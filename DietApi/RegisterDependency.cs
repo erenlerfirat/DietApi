@@ -78,6 +78,7 @@ namespace DietApi
 
             services.AddScoped<IUserDal, UserDal>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserPasswordResetDal, UserPasswordResetDal>();
 
             services.AddSingleton<IJwtHelper, JwtHelper>();
             services.AddSingleton<IHashHelper, HashHelper>();

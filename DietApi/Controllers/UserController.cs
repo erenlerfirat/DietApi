@@ -53,7 +53,7 @@ namespace DietApi.Controllers
         [HttpPut("ChangePassword")]
         public async Task<IActionResult> ChangePassword(UserPasswordChangeRequest request)
         {
-            var result = await userService.ChangePassWord(request);
+            var result = await userService.ChangePassword(request);
 
             if (result.Success)
             {
